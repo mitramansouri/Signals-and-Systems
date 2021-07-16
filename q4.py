@@ -1,22 +1,29 @@
 import numpy as np
 import matplotlib.pyplot as plt 
-from scipy import signal 
 from scipy.fft import fft , ifft
+import sympy as sy
+from scipy.integrate import quad
+t_range = np.arange(-2 * (np.pi), 2 * (np.pi), 0.1)
 
-t_range = np.arange(-2*np.pi , 2*np.pi , 0.1)
 # xt = [x(t) for t in t_range]
 # h(t) = e^-t*u(t)
 def h(t):
-    if t > 0 : 
+    if t < 0 : 
         return 0 
     else : 
         return np.exp(-t)
-# ht = [h(t) for t in t_range]
 
+def h_prime(tprime):
+    if tprime > 0 : 
+        return 0 
+    else : 
+        return np.exp(-tprime)
+ht = [h(t) for t in t_range]
 
-# plt.title('h(t)')
-# plt.plot(t_range,ht)
-# plt.show()
+plt.title('h(t)')
+plt.plot(t_range,ht)
+plt.show()
+
 # x(t) = pulse between +-B/2
 def x(t):
     # B is 2*np.pi
@@ -25,30 +32,34 @@ def x(t):
     else : 
         return 0 
 
-# xt = [x(t) for t in t_range]
+xt = [x(t) for t in t_range]
 
-# plt.title('x(t)')
-# plt.plot(t_range,xt)
-# plt.show()
+plt.title('x(t)')
+plt.plot(t_range,xt)
+plt.show()
 
-# y(t) = x(t) conv h(t)
-# Y(jw) = X(jw) * H(jw)
-# y(t) = F-1{Y(jw)}
+def integrand(tav , t):
+    return x(tav)*h(t-tav)
 
 def convolution():
 
-    xt = [x(t) for t in t_range]
-    ht = [h(t) for t in t_range]
-
-    xjw = fft(xt)
-    hjw = fft(ht)
-
-    yjw = []
-    
-    for index in range(len(hjw)):
-        yjw += [xjw[index] * hjw[index]]
-    
-    yt = ifft(yjw)
+    # h(t) --> h(t-T) 
+    # x(t) --> x(T)
+    yt = []
+    for t in t_range:
+        # print(t)
+        # if t< -1*np.pi :
+        #     # no overlap 
+        #     yt.append(0)
+        # elif  -1*np.pi <t and t< np.pi:
+        #     # integral of the overlapped parts
+        #     # yt.append(sy.integrate(h_prime(tav), (tav, -1*np.pi, t)))
+        #     yt.append(quad(h_prime , -1*np.pi, t , args=())[0])
+        # elif  t> np.pi :
+        #     # integral of the overlapped parts
+        #     # yt.append(sy.integrate(h_prime(tav), (tav, t,np.pi)))   
+        #     yt.append(quad(h_prime , t, np.pi , args=())[0])
+        yt.append(quad(integrand , -np.inf , np.inf , args=(t))[0])
 
 
     plt.title("Convolution")
