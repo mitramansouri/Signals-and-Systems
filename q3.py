@@ -50,6 +50,7 @@ def x_jw_fftresponse():
     a = [xtotal(i) for i in t_range]
     y = fft(a)
     return y
+    
 Xjw = x_jw_fftresponse()
 
 def Y_jw_product(h_jw, x_jw):
