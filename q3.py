@@ -63,7 +63,7 @@ def y_t(x):
     inveresed_fft = ifft(x)
     return inveresed_fft
 yt = y_t(Yjw)
-plt.title("C - h(t)")
+plt.title("C - y(t)")
 plt.plot(t_range, yt)
 plt.show()
 

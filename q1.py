@@ -27,7 +27,7 @@ def display_size():#|X|
     plt.plot(Xaxis, lst)
     plt.xlabel('W')
     plt.ylabel('X(e^jw)')
-    plt.title('SIZE')
+    plt.title('SIZE - only from 0 to N')
     plt.show()
 
 
@@ -44,6 +44,7 @@ def display_phase():
     plt.ylabel('Y')
     plt.title('PHASE')
     plt.show()
+
 # signal itself 
 def display_signal():
     w_range = [i for i in range(N)]
@@ -56,7 +57,6 @@ def display_signal():
     plt.show()
 
 def Q1():
-
     display_size()
     display_phase()
     display_signal()

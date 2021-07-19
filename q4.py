@@ -59,6 +59,7 @@ def convolution():
         #     # integral of the overlapped parts
         #     # yt.append(sy.integrate(h_prime(tav), (tav, t,np.pi)))   
         #     yt.append(quad(h_prime , t, np.pi , args=())[0])
+        # this ^ kinda worked but not really 
         yt.append(quad(integrand , -np.inf , np.inf , args=(t))[0])
 
 
